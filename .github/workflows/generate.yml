@@ -21,7 +21,7 @@ jobs:
 
       - name: Run loadProjects.js
         env:
-          GITHUB_ACCESS_TOKEN: ${{secrets.GITHUB_ACCESS_TOKEN}}
+          GITHUB_ACCESS_TOKEN: ${{secrets.ACCESS_TOKEN}}
           GEMINI_API_KEY: ${{secrets.GEMINI_API_KEY}}
         run: node loadProjects.js
         

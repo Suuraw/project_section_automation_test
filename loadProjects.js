@@ -7,7 +7,6 @@ function delay(ms) {
 
 const githubToken = process.env.GITHUB_ACCESS_TOKEN;
 const geminiApiKey = process.env.GEMINI_API_KEY;
-console.log(geminiApiKey, githubToken);
 const output_path = "src/data/project.json";
 const myModel = new model();
 const octokit = new Octokit({
