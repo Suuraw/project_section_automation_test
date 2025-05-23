@@ -7,6 +7,11 @@ function delay(ms) {
 
 const githubToken = process.env.ACCESS_TOKEN;
 const geminiApiKey = process.env.GEMINI_API_KEY;
+if (!geminiApiKey) {
+  console.error("Missing Gemini API Key!");
+  process.exit(1);
+}
+
 const output_path = "src/data/project.json";
 const myModel = new model();
 const octokit = new Octokit({
