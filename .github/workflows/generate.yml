@@ -3,6 +3,9 @@ name: Generate Repo description
 on:
   workflow_dispatch:
 
+permissions:
+  contents: write  # ✅ Required to allow committing & pushing
+
 jobs:
   load-projects:
     runs-on: ubuntu-latest
@@ -21,10 +24,10 @@ jobs:
 
       - name: Run loadProjects.js
         env:
-          GITHUB_ACCESS_TOKEN: ${{secrets.ACCESS_TOKEN}}
-          GEMINI_API_KEY: ${{secrets.GEMINI_API_KEY}}
+          ACCESS_TOKEN: ${{ secrets.ACCESS_TOKEN }}
+          GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
         run: node loadProjects.js
-        
+
       - name: Set Remote with Token
         run: git remote set-url origin https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}
 
@@ -33,5 +36,5 @@ jobs:
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git add .
-          git commit -m "update projects.json"
+          git diff --cached --quiet || git commit -m "update projects.json"
           git push
