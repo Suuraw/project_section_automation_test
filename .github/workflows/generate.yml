@@ -1,0 +1,37 @@
+name: Generate Repo description
+
+on:
+  workflow_dispatch:
+
+jobs:
+  load-projects:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Load Repo Code
+        uses: actions/checkout@v3
+
+      - name: Setup node js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '18'
+
+      - name: Install Dependencies
+        run: npm install
+
+      - name: Run loadProjects.js
+        env:
+          GITHUB_ACCESS_TOKEN: ${{secrets.GITHUB_ACCESS_TOKEN}}
+          GEMINI_API_KEY: ${{secrets.GEMINI_API_KEY}}
+        run: node loadProjects.js
+        
+      - name: Set Remote with Token
+        run: git remote set-url origin https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}
+
+      - name: Commit and Push projects.json
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add .
+          git commit -m "update projects.json"
+          git push
