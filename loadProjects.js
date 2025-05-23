@@ -5,8 +5,9 @@ function delay(ms) {
   return new Promise((resolve) => setTimeout(resolve, ms));
 }
 
-const githubToken = process.env.ACCESS_TOKEN;
+const githubToken = process.env.GITHUB_ACCESS_TOKEN;
 const geminiApiKey = process.env.GEMINI_API_KEY;
+console.log(githubToken,geminiApiKey);
 const output_path = "src/data/project.json";
 const myModel = new model();
 const octokit = new Octokit({
